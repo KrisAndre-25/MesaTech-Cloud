@@ -14,6 +14,7 @@ public class Solicitud {
     private String titulo;
     private String descripcion;
     private String estado; // CREADA, ASIGNADA, EN_PROCESO, RESUELTA, CERRADA, CANCELADA
+    private String prioridad;
     private Long categoriaId;
     private String usuarioId;
     private LocalDateTime fechaCreacion = LocalDateTime.now();
