@@ -3,6 +3,7 @@ package com.mesatech.bff_service.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,8 +15,12 @@ import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -31,8 +36,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Ver todas las solicitudes y cambiar estado: solo Operador/Administrador
+                        .requestMatchers(HttpMethod.GET, "/v1/solicitudes", "/v2/solicitudes")
+                            .hasAnyAuthority("ROLE_OPERADOR", "ROLE_ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/v1/solicitudes/*/estado")
+                            .hasAnyAuthority("ROLE_OPERADOR", "ROLE_ADMINISTRADOR")
+                        // Mantener catalogo: solo Administrador
+                        .requestMatchers(HttpMethod.POST, "/v1/catalogo/**").hasAuthority("ROLE_ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/v1/catalogo/**").hasAuthority("ROLE_ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/v1/catalogo/**").hasAuthority("ROLE_ADMINISTRADOR")
+                        // Crear solicitud, ver las propias y consultar catalogo: cualquier usuario autenticado
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
@@ -40,6 +57,20 @@ public class SecurityConfig {
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
+    }
+
+    // Permite que el frontend React (localhost:3000) consuma el BFF, incluyendo
+    // el header Authorization con el Bearer token.
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuracion = new CorsConfiguration();
+        configuracion.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuracion.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuracion.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+
+        UrlBasedCorsConfigurationSource fuente = new UrlBasedCorsConfigurationSource();
+        fuente.registerCorsConfiguration("/**", configuracion);
+        return fuente;
     }
 
     @Bean
@@ -53,16 +84,11 @@ public class SecurityConfig {
         return decoder;
     }
 
-    // Entra ID entrega el scope en el claim "scp" (delegado), no en "scope".
-    // Spring Security solo mapea "scope"/"scp" por defecto para authorities via SCOPE_,
-    // esto asegura explicitamente el prefijo esperado (SCOPE_access_as_user).
+    // Mapea tanto el scope delegado ("scp" -> SCOPE_access_as_user) como los
+    // App Roles del usuario ("roles" -> ROLE_CLIENTE/ROLE_OPERADOR/ROLE_ADMINISTRADOR).
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix("SCOPE_");
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("scp");
-
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        converter.setJwtGrantedAuthoritiesConverter(new EntraIdAuthoritiesConverter());
         return converter;
     }
 }
