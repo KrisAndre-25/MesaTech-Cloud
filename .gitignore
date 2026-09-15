@@ -1,0 +1,23 @@
+# Gradle / Java / Spring Boot
+.gradle/
+build/
+target/
+*.class
+*.jar
+
+# IDEs y SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Variables de entorno y Terraform
+.env
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Node / React (Frontend)
+node_modules/
+build/
+dist/
