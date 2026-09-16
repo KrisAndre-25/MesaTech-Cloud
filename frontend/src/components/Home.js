@@ -78,6 +78,13 @@ const EQUIPO = [
       'Convencido de que la buena arquitectura empieza por entender bien el problema del cliente.',
     src: '/cesar.webp',
   },
+  {
+    name: 'Paulo Berríos',
+    designation:
+      'Jefe de Fábrica de Software | Docente DuocUC | Magíster en Data Science | SFPC™, GAIPC™, LSSWBPC™, BIFPC™, BMCEPC™ | Desarrollador Full Stack | AWS Educator | Gestión de Proyectos ágiles | Arquitecto de Software',
+    quote: 'Docente guía de la asignatura Desarrollo Cloud Native I (DSY1107).',
+    src: '/docente-paulo.png',
+  },
 ];
 
 function Home({ onLogin }) {
