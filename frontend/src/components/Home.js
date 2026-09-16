@@ -1,10 +1,9 @@
 import React from 'react';
 import { Vortex } from './ui/vortex';
-import { PointerHighlight } from './ui/pointer-highlight';
 import { AnimatedTestimonials } from './ui/animated-testimonials';
 import { SqueezeCarousel } from './ui/carousel-squeeze';
 import { CardStack, Highlight } from './ui/card-stack';
-import { ThreeDMarquee } from './ui/3d-marquee';
+import { WobbleCard } from './ui/wobble-card';
 import MinimalFooter from './ui/minimal-footer';
 import HomeNavbar from './HomeNavbar';
 
@@ -44,27 +43,6 @@ const FEATURE_CARDS = [
       </p>
     ),
   },
-];
-
-const MARQUEE_IMAGES = [
-  '/kristopher.jpg',
-  '/bianco.jpg',
-  '/cesar.webp',
-  '/docente-paulo.png',
-  '/ENTRAID.png',
-  '/solicitudes.png',
-  '/roles.jpeg',
-  '/arquitectura.png',
-  '/catalogo.gif',
-  '/kristopher.jpg',
-  '/bianco.jpg',
-  '/cesar.webp',
-  '/docente-paulo.png',
-  '/ENTRAID.png',
-  '/solicitudes.png',
-  '/roles.jpeg',
-  '/arquitectura.png',
-  '/catalogo.gif',
 ];
 
 const SOFTWARE_SLIDES = [
@@ -190,6 +168,9 @@ function Home({ onLogin }) {
 
       {/* Features */}
       <div className="max-w-5xl mx-auto px-8 py-24">
+        <h2 className="text-center text-2xl md:text-3xl font-bold mb-12 text-white">
+          Beneficios
+        </h2>
         <div className="flex flex-wrap justify-center gap-10">
           {FEATURE_CARDS.map((card) => (
             <CardStack key={card.id} items={[card]} />
@@ -211,27 +192,56 @@ function Home({ onLogin }) {
       </div>
 
       {/* Sobre nosotros */}
-      <div id="nosotros" className="bg-neutral-950 border-y border-white/10">
-        <div className="max-w-3xl mx-auto px-8 py-20 text-center">
-          <div className="mx-auto text-2xl font-bold tracking-tight md:text-4xl text-white">
-            Creemos que la mejor forma de dar soporte es{' '}
-            <PointerHighlight
-              rectangleClassName="border-purple-400"
-              pointerClassName="text-purple-400"
-            >
-              <span className="text-purple-400">colaborar</span>
-            </PointerHighlight>
-            .
-          </div>
-          <p className="mt-8 text-neutral-400 leading-relaxed">
-            MesaTech Cloud nació como proyecto de la asignatura Desarrollo Cloud Native I
-            (DSY1107). Diseñamos e implementamos toda la plataforma — frontend, autenticación
-            con Microsoft Entra ID, backend y arquitectura de microservicios — como un equipo
-            de tres ingenieros en informática, desarrolladores full stack.
-          </p>
-        </div>
-        <div className="max-w-5xl mx-auto px-8 pb-20">
-          <ThreeDMarquee images={MARQUEE_IMAGES} className="h-[420px] md:h-[520px]" />
+      <div id="nosotros" className="bg-neutral-950 border-y border-white/10 px-6 py-20 md:px-10">
+        <h2 className="mx-auto max-w-6xl text-2xl md:text-3xl font-bold mb-8 text-white">
+          Sobre nosotros
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto w-full">
+          <WobbleCard
+            containerClassName="col-span-1 lg:col-span-2 h-full bg-purple-900 min-h-[500px] lg:min-h-[300px]"
+          >
+            <div className="max-w-xs">
+              <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                Creemos que la mejor forma de dar soporte es colaborar.
+              </h2>
+              <p className="mt-4 text-left text-base/6 text-neutral-200">
+                MesaTech Cloud nació como proyecto de la asignatura Desarrollo Cloud Native I
+                (DSY1107): frontend, autenticación con Microsoft Entra ID, backend y
+                arquitectura de microservicios, todo construido por el mismo equipo.
+              </p>
+            </div>
+            <img
+              src="/icono333.png"
+              alt="MesaTech Cloud"
+              className="absolute -right-4 lg:-right-[10%] grayscale filter -bottom-10 object-contain rounded-2xl w-56 h-56 opacity-60"
+            />
+          </WobbleCard>
+
+          <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-neutral-900">
+            <h2 className="max-w-80 text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+              Un equipo, un objetivo.
+            </h2>
+            <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
+              Tres ingenieros en informática full stack, guiados por un docente con
+              experiencia en AWS y arquitectura de software.
+            </p>
+          </WobbleCard>
+
+          <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-purple-950 min-h-[300px]">
+            <div className="max-w-sm">
+              <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                ¿Quieres conocer al equipo completo?
+              </h2>
+              <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
+                Revisa quién construyó cada parte de la plataforma, foto y rol incluidos.
+              </p>
+            </div>
+            <img
+              src="/icono333.png"
+              alt="MesaTech Cloud"
+              className="absolute -right-10 md:-right-[10%] lg:-right-[5%] -bottom-10 object-contain rounded-2xl w-56 h-56 opacity-60"
+            />
+          </WobbleCard>
         </div>
       </div>
 
