@@ -8,3 +8,12 @@ import '@testing-library/jest-dom';
 if (!global.crypto || !global.crypto.subtle) {
   global.crypto = require('node:crypto').webcrypto;
 }
+
+// jsdom no implementa ResizeObserver; lo usa PointerHighlight (Home).
+if (!global.ResizeObserver) {
+  global.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}
