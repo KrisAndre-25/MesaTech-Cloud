@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Endpoint de version sin autenticacion, usado por API Gateway (GET /v2/version)
+                        .requestMatchers(HttpMethod.GET, "/v2/version").permitAll()
                         // Ver todas las solicitudes y cambiar estado: solo Operador/Administrador
                         .requestMatchers(HttpMethod.GET, "/v1/solicitudes", "/v2/solicitudes")
                             .hasAnyAuthority("ROLE_OPERADOR", "ROLE_ADMINISTRADOR")
