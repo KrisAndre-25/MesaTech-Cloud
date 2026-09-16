@@ -17,3 +17,12 @@ if (!global.ResizeObserver) {
     disconnect() {}
   };
 }
+
+// jsdom no implementa matchMedia; lo usa SqueezeCarousel (prefers-reduced-motion).
+if (!window.matchMedia) {
+  window.matchMedia = () => ({
+    matches: false,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+  });
+}
