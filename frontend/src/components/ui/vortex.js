@@ -157,24 +157,25 @@ export const Vortex = (props) => {
   };
 
   const resize = (canvas) => {
-    const { innerWidth, innerHeight } = window;
+    // Se dimensiona segun el contenedor real (no la ventana completa):
+    // el canvas de Vortex es costoso (dos pasadas de blur por frame), asi
+    // que usar solo el area visible del hero evita saturar la pestaña.
+    const container = containerRef.current;
+    const width = container?.clientWidth || window.innerWidth;
+    const height = container?.clientHeight || window.innerHeight;
 
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
     center[0] = 0.5 * canvas.width;
     center[1] = 0.5 * canvas.height;
   };
 
   const renderGlow = (canvas, ctx) => {
+    // Una sola pasada de blur (el original hace dos) - el filtro de canvas
+    // sobre la imagen completa es la parte mas cara de cada frame.
     ctx.save();
-    ctx.filter = 'blur(8px) brightness(200%)';
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.drawImage(canvas, 0, 0);
-    ctx.restore();
-
-    ctx.save();
-    ctx.filter = 'blur(4px) brightness(200%)';
+    ctx.filter = 'blur(6px) brightness(200%)';
     ctx.globalCompositeOperation = 'lighter';
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
