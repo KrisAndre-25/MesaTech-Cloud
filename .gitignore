@@ -16,6 +16,8 @@ target/
 .terraform/
 *.tfstate
 *.tfstate.*
+terraform/terraform.tfvars
+terraform/*.pem
 
 # Node / React (Frontend)
 node_modules/
