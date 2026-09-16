@@ -3,10 +3,69 @@ import { Vortex } from './ui/vortex';
 import { PointerHighlight } from './ui/pointer-highlight';
 import { AnimatedTestimonials } from './ui/animated-testimonials';
 import { SqueezeCarousel } from './ui/carousel-squeeze';
+import { CardStack, Highlight } from './ui/card-stack';
+import { ThreeDMarquee } from './ui/3d-marquee';
 import MinimalFooter from './ui/minimal-footer';
 import HomeNavbar from './HomeNavbar';
 
 const marca = (texto) => <span className="text-sm font-medium tracking-tight text-white">{texto}</span>;
+
+const FEATURE_CARDS = [
+  {
+    id: 0,
+    name: 'Gestión centralizada',
+    designation: '01',
+    content: (
+      <p>
+        Crea, asigna y sigue cada solicitud desde{' '}
+        <Highlight>un único registro</Highlight>, con historial completo por caso.
+      </p>
+    ),
+  },
+  {
+    id: 1,
+    name: 'Roles y permisos',
+    designation: '02',
+    content: (
+      <p>
+        Cliente, operador y administrador ven exactamente{' '}
+        <Highlight>lo que su rol necesita</Highlight> — nada más.
+      </p>
+    ),
+  },
+  {
+    id: 2,
+    name: 'Trazabilidad completa',
+    designation: '03',
+    content: (
+      <p>
+        Cada solicitud sigue <Highlight>un flujo de estados claro</Highlight>, visible
+        para todos los involucrados.
+      </p>
+    ),
+  },
+];
+
+const MARQUEE_IMAGES = [
+  '/kristopher.jpg',
+  '/bianco.jpg',
+  '/cesar.webp',
+  '/docente-paulo.png',
+  '/ENTRAID.png',
+  '/solicitudes.png',
+  '/roles.jpeg',
+  '/arquitectura.png',
+  '/catalogo.gif',
+  '/kristopher.jpg',
+  '/bianco.jpg',
+  '/cesar.webp',
+  '/docente-paulo.png',
+  '/ENTRAID.png',
+  '/solicitudes.png',
+  '/roles.jpeg',
+  '/arquitectura.png',
+  '/catalogo.gif',
+];
 
 const SOFTWARE_SLIDES = [
   {
@@ -126,18 +185,12 @@ function Home({ onLogin }) {
       </div>
 
       {/* Features */}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-8 py-20">
-        {[
-          ['01', 'Gestión centralizada', 'Crea, asigna y sigue cada solicitud desde un único registro, con historial completo por caso.'],
-          ['02', 'Roles y permisos', 'Cliente, operador y administrador ven exactamente lo que su rol necesita — nada más.'],
-          ['03', 'Trazabilidad completa', 'Cada solicitud sigue un flujo de estados claro, visible para todos los involucrados.'],
-        ].map(([n, title, desc]) => (
-          <div key={n} className="flex flex-col gap-3">
-            <span className="text-sm font-mono font-bold text-purple-400">{n}</span>
-            <h3 className="text-lg font-bold text-white">{title}</h3>
-            <p className="text-sm text-neutral-400 leading-relaxed">{desc}</p>
-          </div>
-        ))}
+      <div className="max-w-5xl mx-auto px-8 py-24">
+        <div className="flex flex-wrap justify-center gap-10">
+          {FEATURE_CARDS.map((card) => (
+            <CardStack key={card.id} items={[card]} />
+          ))}
+        </div>
       </div>
 
       {/* Cómo funciona el software */}
@@ -172,6 +225,9 @@ function Home({ onLogin }) {
             con Microsoft Entra ID, backend y arquitectura de microservicios — como un equipo
             de tres ingenieros en informática, desarrolladores full stack.
           </p>
+        </div>
+        <div className="max-w-5xl mx-auto px-8 pb-20">
+          <ThreeDMarquee images={MARQUEE_IMAGES} className="h-[420px] md:h-[520px]" />
         </div>
       </div>
 
