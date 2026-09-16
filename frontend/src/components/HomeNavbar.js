@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 
 const SECCIONES = [
   { id: 'inicio', label: 'Inicio' },
+  { id: 'producto', label: 'Producto' },
   { id: 'nosotros', label: 'Sobre nosotros' },
   { id: 'equipo', label: 'Equipo' },
 ];

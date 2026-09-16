@@ -2,7 +2,54 @@ import React from 'react';
 import { Vortex } from './ui/vortex';
 import { PointerHighlight } from './ui/pointer-highlight';
 import { AnimatedTestimonials } from './ui/animated-testimonials';
+import { SqueezeCarousel } from './ui/carousel-squeeze';
+import MinimalFooter from './ui/minimal-footer';
 import HomeNavbar from './HomeNavbar';
+
+const marca = (texto) => <span className="text-sm font-medium tracking-tight text-white">{texto}</span>;
+
+const SOFTWARE_SLIDES = [
+  {
+    id: 'auth',
+    title: 'Autenticación corporativa con Microsoft Entra ID.',
+    description:
+      'El login se hace con la cuenta de la organización; el backend valida cada token — emisor, audiencia, firma y expiración — antes de autorizar cualquier operación.',
+    background: 'linear-gradient(135deg, #3b0764, #000000)',
+    overlay: marca('Entra ID'),
+  },
+  {
+    id: 'solicitudes',
+    title: 'Cada solicitud sigue un flujo de estados controlado.',
+    description:
+      'Creada, asignada, en proceso, resuelta o cerrada: el sistema impide saltarse pasos, por ejemplo resolver algo que nunca estuvo en proceso.',
+    background: 'linear-gradient(135deg, #064e3b, #000000)',
+    overlay: marca('Solicitudes'),
+  },
+  {
+    id: 'roles',
+    title: 'Tres roles, tres vistas distintas.',
+    description:
+      'Cliente, operador y administrador ven y pueden hacer exactamente lo que su rol permite, validado tanto en el frontend como en el backend.',
+    background: 'linear-gradient(135deg, #581c87, #064e3b)',
+    overlay: marca('Roles'),
+  },
+  {
+    id: 'arquitectura',
+    title: 'Arquitectura de microservicios con un BFF al centro.',
+    description:
+      'El frontend nunca habla directo con los microservicios: todo pasa por un Backend for Frontend que valida el token y coordina las llamadas.',
+    background: 'linear-gradient(135deg, #18181b, #3b0764)',
+    overlay: marca('Arquitectura'),
+  },
+  {
+    id: 'catalogo',
+    title: 'Catálogo de categorías administrable.',
+    description:
+      'El administrador mantiene las categorías y su prioridad por defecto, disponibles de inmediato para clientes y operadores.',
+    background: 'linear-gradient(135deg, #064e3b, #3b0764)',
+    overlay: marca('Catálogo'),
+  },
+];
 
 const EQUIPO = [
   {
@@ -81,6 +128,19 @@ function Home({ onLogin }) {
         ))}
       </div>
 
+      {/* Cómo funciona el software */}
+      <div id="producto" className="border-t border-neutral-200 bg-white px-6 py-16 md:px-10">
+        <h2 className="mx-auto max-w-5xl text-2xl md:text-3xl font-bold mb-2">
+          Cómo funciona MesaTech Cloud
+        </h2>
+        <p className="mx-auto max-w-5xl text-neutral-500 mb-8">
+          Un recorrido rápido por las piezas técnicas detrás de la plataforma.
+        </p>
+        <div className="mx-auto max-w-5xl">
+          <SqueezeCarousel slides={SOFTWARE_SLIDES} label="Cómo funciona" accent="#9333ea" />
+        </div>
+      </div>
+
       {/* Sobre nosotros */}
       <div id="nosotros" className="bg-neutral-50 border-y border-neutral-200">
         <div className="max-w-3xl mx-auto px-8 py-20 text-center">
@@ -111,11 +171,7 @@ function Home({ onLogin }) {
         <AnimatedTestimonials testimonials={EQUIPO} autoplay />
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-neutral-200 px-8 py-6 flex items-center justify-between text-sm text-neutral-500">
-        <span>© MesaTech Cloud</span>
-        <span>DSY1107 — Desarrollo Cloud Native I</span>
-      </div>
+      <MinimalFooter />
     </div>
   );
 }
