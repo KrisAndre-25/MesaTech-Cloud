@@ -52,7 +52,7 @@ function HomeNavbar({ onLogin }) {
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between gap-6 px-8 py-3 bg-black/90 backdrop-blur border-b border-purple-900/50">
       <span className="flex items-center gap-2 font-bold text-lg tracking-tight text-white shrink-0">
-        <span className="inline-block h-2.5 w-2.5 rounded-full bg-purple-500" />
+        <img src="/icono333.png" alt="MesaTech Cloud" className="h-7 w-7 object-contain" />
         MesaTech<span className="text-purple-400">Cloud</span>
       </span>
 

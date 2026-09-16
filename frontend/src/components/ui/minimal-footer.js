@@ -82,7 +82,7 @@ export function MinimalFooter() {
         <div className="grid max-w-4xl grid-cols-6 gap-6 p-4 pt-8">
           <div className="col-span-6 flex flex-col gap-5 md:col-span-4">
             <a href="#inicio" className="flex w-max items-center gap-2 font-bold text-white">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-purple-500" />
+              <img src="/icono333.png" alt="MesaTech Cloud" className="h-6 w-6 object-contain" />
               MesaTech<span className="text-purple-400">Cloud</span>
             </a>
             <p className="max-w-sm font-mono text-sm text-balance text-neutral-400">
