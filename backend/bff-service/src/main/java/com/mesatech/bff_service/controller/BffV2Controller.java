@@ -54,4 +54,12 @@ public class BffV2Controller {
 
         return ResponseEntity.ok(solicitudes);
     }
+
+    @GetMapping("/version")
+    public ResponseEntity<Map<String, String>> version() {
+        Map<String, String> info = new HashMap<>();
+        info.put("servicio", "bff-service");
+        info.put("version", "0.0.1-SNAPSHOT");
+        return ResponseEntity.ok(info);
+    }
 }
