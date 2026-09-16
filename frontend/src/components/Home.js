@@ -147,6 +147,10 @@ const EQUIPO = [
 ];
 
 function Home({ onLogin }) {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="w-full min-h-screen bg-black text-white">
       <HomeNavbar onLogin={onLogin} />
