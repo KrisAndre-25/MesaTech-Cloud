@@ -2,6 +2,7 @@ import React from 'react';
 import { Vortex } from './ui/vortex';
 import { PointerHighlight } from './ui/pointer-highlight';
 import { AnimatedTestimonials } from './ui/animated-testimonials';
+import HomeNavbar from './HomeNavbar';
 
 const EQUIPO = [
   {
@@ -30,27 +31,14 @@ const EQUIPO = [
 function Home({ onLogin }) {
   return (
     <div className="w-full min-h-screen bg-white text-black">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-white border-b border-neutral-200">
-        <span className="flex items-center gap-2 font-bold text-lg tracking-tight">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-purple-600" />
-          MesaTech
-          <span className="text-emerald-500">Cloud</span>
-        </span>
-        <button
-          onClick={onLogin}
-          className="rounded-md bg-purple-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500"
-        >
-          Iniciar sesión
-        </button>
-      </nav>
+      <HomeNavbar onLogin={onLogin} />
 
       {/* Hero con Vortex */}
-      <div className="w-full h-[34rem] overflow-hidden">
+      <div id="inicio" className="w-full h-[34rem] overflow-hidden">
         <Vortex
           backgroundColor="black"
           baseHue={270}
-          particleCount={250}
+          particleCount={140}
           className="flex items-center flex-col justify-center px-4 md:px-10 py-4 w-full h-full"
         >
           <h1 className="text-white text-3xl md:text-6xl font-bold text-center max-w-3xl">
@@ -94,7 +82,7 @@ function Home({ onLogin }) {
       </div>
 
       {/* Sobre nosotros */}
-      <div className="bg-neutral-50 border-y border-neutral-200">
+      <div id="nosotros" className="bg-neutral-50 border-y border-neutral-200">
         <div className="max-w-3xl mx-auto px-8 py-20 text-center">
           <div className="mx-auto text-2xl font-bold tracking-tight md:text-4xl">
             Creemos que la mejor forma de dar soporte es{' '}
