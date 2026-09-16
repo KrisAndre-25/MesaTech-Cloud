@@ -6,116 +6,69 @@ import {
 } from '@azure/msal-react';
 import { loginRequest } from './authConfig';
 import { obtenerAccessToken, crearClienteApi } from './api';
-import './App.css';
+import { obtenerRolesDeToken } from './roles';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import MisSolicitudes from './components/MisSolicitudes';
+import TodasSolicitudes from './components/TodasSolicitudes';
+import Catalogo from './components/Catalogo';
+
+function AppAutenticada({ instance, cuenta }) {
+  const [api, setApi] = useState(null);
+  const [roles, setRoles] = useState([]);
+  const [vista, setVista] = useState('mis');
+
+  useEffect(() => {
+    obtenerAccessToken(instance, cuenta).then((token) => {
+      // setApi(cliente) se confundiria con la forma funcional de setState,
+      // ya que una instancia de axios es invocable (es una funcion con
+      // metodos adjuntos) - se envuelve para que React la guarde tal cual.
+      setApi(() => crearClienteApi(token));
+      setRoles(obtenerRolesDeToken(token));
+    });
+  }, [instance, cuenta]);
+
+  if (!api) {
+    return (
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-faint)' }}>Cargando sesión...</span>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      <Navbar
+        nombre={cuenta.name}
+        roles={roles}
+        vista={vista}
+        onCambiarVista={setVista}
+        onLogout={() => instance.logoutRedirect()}
+      />
+      {vista === 'mis' && <MisSolicitudes api={api} usuarioId={cuenta.localAccountId} />}
+      {vista === 'todas' && <TodasSolicitudes api={api} />}
+      {vista === 'catalogo' && <Catalogo api={api} />}
+    </div>
+  );
+}
 
 function App() {
   const { instance, accounts } = useMsal();
-  const [solicitudes, setSolicitudes] = useState([]);
-  const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);
-  const [nueva, setNueva] = useState({ titulo: '', descripcion: '', prioridad: 'MEDIA', categoriaId: '' });
 
   const iniciarSesion = () => {
     instance.loginRedirect(loginRequest).catch((err) => console.error(err));
   };
 
-  const cerrarSesion = () => {
-    instance.logoutRedirect();
-  };
-
-  useEffect(() => {
-    if (accounts.length === 0) return;
-
-    obtenerAccessToken(instance, accounts[0])
-      .then((accessToken) => {
-        setToken(accessToken);
-        const api = crearClienteApi(accessToken);
-        return api.get('/v1/solicitudes/mias');
-      })
-      .then((respuesta) => setSolicitudes(respuesta.data))
-      .catch((err) => setError(err.message));
-  }, [instance, accounts]);
-
-  const crearSolicitud = async (e) => {
-    e.preventDefault();
-    if (!token) return;
-    try {
-      const api = crearClienteApi(token);
-      await api.post('/v1/solicitudes', {
-        ...nueva,
-        categoriaId: nueva.categoriaId ? Number(nueva.categoriaId) : null,
-        usuarioId: accounts[0]?.localAccountId,
-      });
-      const respuesta = await api.get('/v1/solicitudes/mias');
-      setSolicitudes(respuesta.data);
-      setNueva({ titulo: '', descripcion: '', prioridad: 'MEDIA', categoriaId: '' });
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
   return (
-    <div style={{ padding: '30px', fontFamily: 'sans-serif' }}>
-      <h1>MesaTech Cloud</h1>
-
+    <>
       <UnauthenticatedTemplate>
-        <p>El usuario no está autenticado.</p>
-        <button onClick={iniciarSesion}>Iniciar sesión</button>
+        <Home onLogin={iniciarSesion} />
       </UnauthenticatedTemplate>
 
       <AuthenticatedTemplate>
-        <h2>Usuario autenticado</h2>
-        {accounts.length > 0 && (
-          <>
-            <p>Nombre: {accounts[0].name}</p>
-            <p>Usuario: {accounts[0].username}</p>
-            <p>oid (claim): {accounts[0].idTokenClaims?.oid}</p>
-          </>
-        )}
-        <button onClick={cerrarSesion}>Cerrar sesión</button>
-
-        <hr />
-
-        <h3>Crear solicitud</h3>
-        <form onSubmit={crearSolicitud}>
-          <input
-            placeholder="Título"
-            value={nueva.titulo}
-            onChange={(e) => setNueva({ ...nueva, titulo: e.target.value })}
-            required
-          />
-          <input
-            placeholder="Descripción"
-            value={nueva.descripcion}
-            onChange={(e) => setNueva({ ...nueva, descripcion: e.target.value })}
-          />
-          <input
-            placeholder="Categoría ID"
-            value={nueva.categoriaId}
-            onChange={(e) => setNueva({ ...nueva, categoriaId: e.target.value })}
-          />
-          <select
-            value={nueva.prioridad}
-            onChange={(e) => setNueva({ ...nueva, prioridad: e.target.value })}
-          >
-            <option value="BAJA">BAJA</option>
-            <option value="MEDIA">MEDIA</option>
-            <option value="ALTA">ALTA</option>
-          </select>
-          <button type="submit">Crear</button>
-        </form>
-
-        <h3>Mis solicitudes</h3>
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-        <ul>
-          {solicitudes.map((s) => (
-            <li key={s.id}>
-              #{s.id} - {s.titulo} - {s.estado} - {s.prioridad}
-            </li>
-          ))}
-        </ul>
+        {accounts.length > 0 && <AppAutenticada instance={instance} cuenta={accounts[0]} />}
       </AuthenticatedTemplate>
-    </div>
+    </>
   );
 }
 

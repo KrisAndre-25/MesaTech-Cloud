@@ -11,5 +11,6 @@ test('muestra el boton de inicio de sesion cuando no hay usuario autenticado', a
       <App />
     </MsalProvider>
   );
-  expect(await screen.findByText(/iniciar sesión/i)).toBeInTheDocument();
+  const botones = await screen.findAllByText(/iniciar sesión/i);
+  expect(botones.length).toBeGreaterThan(0);
 });
