@@ -14,7 +14,8 @@ const SOFTWARE_SLIDES = [
     title: 'Autenticación corporativa con Microsoft Entra ID.',
     description:
       'El login se hace con la cuenta de la organización; el backend valida cada token — emisor, audiencia, firma y expiración — antes de autorizar cualquier operación.',
-    background: 'linear-gradient(135deg, #3b0764, #000000)',
+    image: '/ENTRAID.png',
+    imageAlt: 'Logo de Microsoft Entra ID',
     overlay: marca('Entra ID'),
   },
   {
@@ -22,7 +23,8 @@ const SOFTWARE_SLIDES = [
     title: 'Cada solicitud sigue un flujo de estados controlado.',
     description:
       'Creada, asignada, en proceso, resuelta o cerrada: el sistema impide saltarse pasos, por ejemplo resolver algo que nunca estuvo en proceso.',
-    background: 'linear-gradient(135deg, #581c87, #000000)',
+    image: '/solicitudes.png',
+    imageAlt: 'Icono de una solicitud aprobada',
     overlay: marca('Solicitudes'),
   },
   {
@@ -30,7 +32,8 @@ const SOFTWARE_SLIDES = [
     title: 'Tres roles, tres vistas distintas.',
     description:
       'Cliente, operador y administrador ven y pueden hacer exactamente lo que su rol permite, validado tanto en el frontend como en el backend.',
-    background: 'linear-gradient(135deg, #6b21a8, #1e1b4b)',
+    image: '/roles.jpeg',
+    imageAlt: 'Panel de Microsoft Entra ID con los usuarios asignados a la app mesatech-api',
     overlay: marca('Roles'),
   },
   {
@@ -38,7 +41,8 @@ const SOFTWARE_SLIDES = [
     title: 'Arquitectura de microservicios con un BFF al centro.',
     description:
       'El frontend nunca habla directo con los microservicios: todo pasa por un Backend for Frontend que valida el token y coordina las llamadas.',
-    background: 'linear-gradient(135deg, #18181b, #4c1d95)',
+    image: '/arquitectura.png',
+    imageAlt: 'Estructura de carpetas del proyecto MesaTech Cloud en el editor',
     overlay: marca('Arquitectura'),
   },
   {
@@ -46,7 +50,8 @@ const SOFTWARE_SLIDES = [
     title: 'Catálogo de categorías administrable.',
     description:
       'El administrador mantiene las categorías y su prioridad por defecto, disponibles de inmediato para clientes y operadores.',
-    background: 'linear-gradient(135deg, #2e1065, #000000)',
+    image: '/catalogo.gif',
+    imageAlt: 'Ilustración de un catálogo de productos',
     overlay: marca('Catálogo'),
   },
 ];
