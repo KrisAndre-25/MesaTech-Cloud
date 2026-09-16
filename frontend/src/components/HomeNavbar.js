@@ -53,7 +53,7 @@ function HomeNavbar({ onLogin }) {
     <nav className="sticky top-0 z-50 flex items-center justify-between gap-6 px-8 py-3 bg-black/90 backdrop-blur border-b border-purple-900/50">
       <span className="flex items-center gap-2 font-bold text-lg tracking-tight text-white shrink-0">
         <span className="inline-block h-2.5 w-2.5 rounded-full bg-purple-500" />
-        MesaTech<span className="text-emerald-400">Cloud</span>
+        MesaTech<span className="text-purple-400">Cloud</span>
       </span>
 
       <div className="hidden sm:flex items-center gap-1 rounded-full bg-white/5 p-1">
@@ -84,7 +84,7 @@ function HomeNavbar({ onLogin }) {
 
       <button
         onClick={onLogin}
-        className="rounded-full bg-purple-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500 shrink-0"
+        className="rounded-full bg-purple-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-purple-700 shrink-0"
       >
         Iniciar sesión
       </button>

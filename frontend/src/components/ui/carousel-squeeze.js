@@ -290,9 +290,9 @@ export function SqueezeCarousel({
                 onMouseMove={() => hoverGrow && setHover(col)}
                 onClick={() => col > 0 && step(col)}
                 className={cn(
-                  'relative isolate h-full shrink-0 cursor-pointer overflow-hidden bg-neutral-200 p-0',
+                  'relative isolate h-full shrink-0 cursor-pointer overflow-hidden bg-neutral-800 p-0',
                   'outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-                  'focus-visible:ring-[var(--sq-fill)] focus-visible:ring-offset-white',
+                  'focus-visible:ring-[var(--sq-fill)] focus-visible:ring-offset-black',
                   panelClassName
                 )}
                 style={{
@@ -345,9 +345,9 @@ export function SqueezeCarousel({
               }}
             >
               <p className="max-w-[46rem] text-[15px] leading-[1.6] text-balance @lg:text-[17px]">
-                <span className="text-neutral-900">{slide.title}</span>{' '}
+                <span className="text-white">{slide.title}</span>{' '}
                 {slide.description && (
-                  <span className="text-neutral-500">{slide.description}</span>
+                  <span className="text-neutral-400">{slide.description}</span>
                 )}
               </p>
 
@@ -405,7 +405,7 @@ function Arrow({ back = false, label, onClick }) {
         'bg-[var(--sq-fill)] text-[var(--sq-on-fill)]',
         'transition-opacity hover:opacity-85 outline-none',
         'focus-visible:ring-2 focus-visible:ring-[var(--sq-fill)]',
-        'focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+        'focus-visible:ring-offset-2 focus-visible:ring-offset-black'
       )}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -450,7 +450,7 @@ function Action({ slide, shown }) {
     'bg-[var(--sq-fill)] px-4 py-2.5 text-sm font-medium text-[var(--sq-on-fill)]',
     'transition-opacity hover:opacity-85 outline-none',
     'focus-visible:ring-2 focus-visible:ring-[var(--sq-fill)]',
-    'focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+    'focus-visible:ring-offset-2 focus-visible:ring-offset-black'
   );
 
   if (slide.href) {

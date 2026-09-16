@@ -22,7 +22,7 @@ const SOFTWARE_SLIDES = [
     title: 'Cada solicitud sigue un flujo de estados controlado.',
     description:
       'Creada, asignada, en proceso, resuelta o cerrada: el sistema impide saltarse pasos, por ejemplo resolver algo que nunca estuvo en proceso.',
-    background: 'linear-gradient(135deg, #064e3b, #000000)',
+    background: 'linear-gradient(135deg, #581c87, #000000)',
     overlay: marca('Solicitudes'),
   },
   {
@@ -30,7 +30,7 @@ const SOFTWARE_SLIDES = [
     title: 'Tres roles, tres vistas distintas.',
     description:
       'Cliente, operador y administrador ven y pueden hacer exactamente lo que su rol permite, validado tanto en el frontend como en el backend.',
-    background: 'linear-gradient(135deg, #581c87, #064e3b)',
+    background: 'linear-gradient(135deg, #6b21a8, #1e1b4b)',
     overlay: marca('Roles'),
   },
   {
@@ -38,7 +38,7 @@ const SOFTWARE_SLIDES = [
     title: 'Arquitectura de microservicios con un BFF al centro.',
     description:
       'El frontend nunca habla directo con los microservicios: todo pasa por un Backend for Frontend que valida el token y coordina las llamadas.',
-    background: 'linear-gradient(135deg, #18181b, #3b0764)',
+    background: 'linear-gradient(135deg, #18181b, #4c1d95)',
     overlay: marca('Arquitectura'),
   },
   {
@@ -46,7 +46,7 @@ const SOFTWARE_SLIDES = [
     title: 'Catálogo de categorías administrable.',
     description:
       'El administrador mantiene las categorías y su prioridad por defecto, disponibles de inmediato para clientes y operadores.',
-    background: 'linear-gradient(135deg, #064e3b, #3b0764)',
+    background: 'linear-gradient(135deg, #2e1065, #000000)',
     overlay: marca('Catálogo'),
   },
 ];
@@ -77,19 +77,19 @@ const EQUIPO = [
 
 function Home({ onLogin }) {
   return (
-    <div className="w-full min-h-screen bg-white text-black">
+    <div className="w-full min-h-screen bg-black text-white">
       <HomeNavbar onLogin={onLogin} />
 
       {/* Hero con Vortex */}
       <div id="inicio" className="w-full h-[34rem] overflow-hidden">
         <Vortex
           backgroundColor="black"
-          baseHue={270}
+          baseHue={280}
           particleCount={140}
           className="flex items-center flex-col justify-center px-4 md:px-10 py-4 w-full h-full"
         >
           <h1 className="text-white text-3xl md:text-6xl font-bold text-center max-w-3xl">
-            Ninguna solicitud se pierde <span className="text-emerald-400">jamás</span>.
+            Ninguna solicitud se pierde <span className="text-purple-400">jamás</span>.
           </h1>
           <p className="text-neutral-300 text-sm md:text-xl max-w-xl mt-6 text-center">
             MesaTech Cloud centraliza el soporte técnico de tu organización: clientes,
@@ -105,7 +105,7 @@ function Home({ onLogin }) {
             </button>
             <a
               href="#equipo"
-              className="px-5 py-2.5 text-white border border-white/30 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition"
+              className="px-5 py-2.5 text-white border border-white/30 rounded-lg hover:border-purple-400 hover:text-purple-400 transition"
             >
               Conoce al equipo
             </a>
@@ -121,19 +121,19 @@ function Home({ onLogin }) {
           ['03', 'Trazabilidad completa', 'Cada solicitud sigue un flujo de estados claro, visible para todos los involucrados.'],
         ].map(([n, title, desc]) => (
           <div key={n} className="flex flex-col gap-3">
-            <span className="text-sm font-mono font-bold text-purple-600">{n}</span>
-            <h3 className="text-lg font-bold">{title}</h3>
-            <p className="text-sm text-neutral-600 leading-relaxed">{desc}</p>
+            <span className="text-sm font-mono font-bold text-purple-400">{n}</span>
+            <h3 className="text-lg font-bold text-white">{title}</h3>
+            <p className="text-sm text-neutral-400 leading-relaxed">{desc}</p>
           </div>
         ))}
       </div>
 
       {/* Cómo funciona el software */}
-      <div id="producto" className="border-t border-neutral-200 bg-white px-6 py-16 md:px-10">
-        <h2 className="mx-auto max-w-5xl text-2xl md:text-3xl font-bold mb-2">
+      <div id="producto" className="border-t border-white/10 bg-black px-6 py-16 md:px-10">
+        <h2 className="mx-auto max-w-5xl text-2xl md:text-3xl font-bold mb-2 text-white">
           Cómo funciona MesaTech Cloud
         </h2>
-        <p className="mx-auto max-w-5xl text-neutral-500 mb-8">
+        <p className="mx-auto max-w-5xl text-neutral-400 mb-8">
           Un recorrido rápido por las piezas técnicas detrás de la plataforma.
         </p>
         <div className="mx-auto max-w-5xl">
@@ -142,19 +142,19 @@ function Home({ onLogin }) {
       </div>
 
       {/* Sobre nosotros */}
-      <div id="nosotros" className="bg-neutral-50 border-y border-neutral-200">
+      <div id="nosotros" className="bg-neutral-950 border-y border-white/10">
         <div className="max-w-3xl mx-auto px-8 py-20 text-center">
-          <div className="mx-auto text-2xl font-bold tracking-tight md:text-4xl">
+          <div className="mx-auto text-2xl font-bold tracking-tight md:text-4xl text-white">
             Creemos que la mejor forma de dar soporte es{' '}
             <PointerHighlight
-              rectangleClassName="border-emerald-500"
-              pointerClassName="text-emerald-500"
+              rectangleClassName="border-purple-400"
+              pointerClassName="text-purple-400"
             >
-              <span className="text-purple-600">colaborar</span>
+              <span className="text-purple-400">colaborar</span>
             </PointerHighlight>
             .
           </div>
-          <p className="mt-8 text-neutral-600 leading-relaxed">
+          <p className="mt-8 text-neutral-400 leading-relaxed">
             MesaTech Cloud nació como proyecto de la asignatura Desarrollo Cloud Native I
             (DSY1107). Diseñamos e implementamos toda la plataforma — frontend, autenticación
             con Microsoft Entra ID, backend y arquitectura de microservicios — como un equipo
@@ -164,8 +164,8 @@ function Home({ onLogin }) {
       </div>
 
       {/* Equipo */}
-      <div id="equipo" className="max-w-5xl mx-auto px-8">
-        <h2 className="text-center text-2xl md:text-3xl font-bold pt-16">
+      <div id="equipo" className="max-w-5xl mx-auto px-8 bg-black">
+        <h2 className="text-center text-2xl md:text-3xl font-bold pt-16 text-white">
           El equipo detrás de esto
         </h2>
         <AnimatedTestimonials testimonials={EQUIPO} autoplay />
