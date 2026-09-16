@@ -26,3 +26,12 @@ if (!window.matchMedia) {
     removeEventListener: () => {},
   });
 }
+
+// jsdom no implementa IntersectionObserver; lo usa motion (whileInView) en MinimalFooter.
+if (!global.IntersectionObserver) {
+  global.IntersectionObserver = class IntersectionObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}
