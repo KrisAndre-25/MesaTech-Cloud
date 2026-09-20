@@ -2,7 +2,11 @@ export const msalConfig = {
   auth: {
     clientId: "4f45f448-2d78-4af4-9c70-cd862d4ebbf7",
     authority: "https://login.microsoftonline.com/06f1c869-7c5f-43b4-95b1-75bf0354d168",
-    redirectUri: "http://localhost:3000/",
+    // Dinamico en vez de fijo: el mismo build sirve para localhost:3000 en
+    // desarrollo y para la URL publica de API Gateway una vez desplegado.
+    // Cada origen que se use debe estar registrado como Redirect URI (tipo
+    // SPA) en Entra ID, o el login falla con AADSTS50011.
+    redirectUri: window.location.origin + "/",
   },
   cache: {
     cacheLocation: "sessionStorage",
