@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2,2 L2,17 L6,13.5 L9,20.5 L11.5,19.3 L8.5,12.7 L14,12.7 Z' fill='white' stroke='black' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, auto;
+}
+
+:root {
+  --bg: oklch(0.11 0.025 293);
+  --surface: oklch(0.15 0.03 293);
+  --surface-2: oklch(0.13 0.03 293);
+  --border: oklch(0.26 0.045 293);
+  --border-soft: oklch(0.20 0.035 293);
+
+  --text: oklch(0.95 0.01 293);
+  --text-dim: oklch(0.62 0.03 293);
+  --text-faint: oklch(0.48 0.03 293);
+
+  --accent: #9333ea;
+  --accent-ink: oklch(0.08 0.02 293);
+  --accent-glow: 0 0 40px -8px var(--accent);
+
+  --status-creada: oklch(0.45 0.03 293);
+  --status-asignada: oklch(0.58 0.06 293);
+  --status-en-proceso: var(--accent);
+  --status-resuelta: oklch(0.78 0.1 293);
+  --status-cerrada: oklch(0.4 0.02 293);
+  --status-cancelada: oklch(0.4 0.02 293);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+input, textarea, select, button {
+  font-family: var(--font-body);
+}
+
+input, textarea, select {
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 9px 11px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-faint);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+button {
+  cursor: pointer;
+}
