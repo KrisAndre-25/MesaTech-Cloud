@@ -32,6 +32,24 @@ El sistema está construido con una **arquitectura cloud-native**:
 
 ---
 
+## 🌐 Demo en vivo
+
+La aplicación completa (frontend + backend) está desplegada y funcionando en AWS:
+
+### **https://p1at13oen7.execute-api.us-east-1.amazonaws.com/**
+
+Frontend y backend quedan bajo la misma URL (API Gateway sirve el build de React y reenvía las llamadas de API al `bff-service`), por lo que no hay problemas de CORS en el despliegue. El login usa Microsoft Entra ID — se necesita una cuenta del tenant con un App Role asignado.
+
+---
+
+## 👥 Equipo
+
+- **Kristopher Astudillo**
+- **Bianco Martínez**
+- **Cesar Flores**
+
+---
+
 ## 🏗️ Arquitectura
 
 ```mermaid
@@ -80,17 +98,7 @@ CREADA ──▶ ASIGNADA ──▶ EN_PROCESO ──▶ RESUELTA ──▶ CERR
 
 ## 🧭 Estructura del repositorio
 
-> [!IMPORTANT]
-> El trabajo está **repartido por ramas**: `main` contiene la base del backend, Docker y
-> Terraform, pero **no** el frontend. Para levantar el stack completo necesitas la rama
-> `backend` (microservicios completos) y la rama `frontend` (SPA).
-
-| Rama | Contenido |
-| --- | --- |
-| `main` | Rama de integración: estructura base del backend, `docker/`, `terraform/` |
-| `backend` | Microservicios completos — controladores, seguridad, JPA — e infraestructura Terraform |
-| `frontend` | SPA React 19 en `frontend/`, con MSAL y componentes de UI |
-| `dev` | Rama de trabajo compartida |
+`main` contiene el proyecto **completo y unificado**: backend, frontend, Docker y Terraform. También existen ramas de trabajo (`backend`, `frontend`, `dev`) usadas durante el desarrollo por cada frente del equipo, pero para clonar y levantar el proyecto **basta con `main`**.
 
 ```
 MesaTech-Cloud/
@@ -100,7 +108,7 @@ MesaTech-Cloud/
 │   └── catalogo-service/     # Categorías de soporte
 ├── docker/
 │   └── docker-compose.yml    # PostgreSQL 15
-├── frontend/                 # SPA React 19 + MSAL   (rama `frontend`)
+├── frontend/                 # SPA React 19 + MSAL
 └── terraform/                # EC2 + API Gateway + JWT Authorizer (AWS)
 ```
 
@@ -152,7 +160,7 @@ docker ps
 
 ### 2 · Compilar y ejecutar los microservicios ☕
 
-Los tres servicios se compilan por separado. Desde la raíz del repositorio, en la rama `backend`:
+Los tres servicios se compilan por separado, desde la raíz del repositorio:
 
 ```bash
 # En Windows PowerShell usar .\gradlew.bat en vez de ./gradlew
@@ -185,7 +193,7 @@ curl http://localhost:8080/v2/version
 
 ### 3 · Ejecutar el frontend ⚛️
 
-En una cuarta terminal, desde la rama `frontend`:
+En una cuarta terminal:
 
 ```bash
 cd frontend
@@ -248,7 +256,7 @@ La SPA queda disponible en **http://localhost:3000** 🎉
 | Variable | Valor por defecto | Descripción |
 | --- | --- | --- |
 | `aws_region` | `us-east-1` | Región de despliegue |
-| `instance_type` | `t3.micro` | Tipo de instancia EC2 |
+| `instance_type` | `t3.small` | Tipo de instancia EC2 (2GB RAM — necesario para los 3 microservicios + Postgres + frontend a la vez) |
 | `allowed_ssh_cidr` | — | CIDR autorizado para SSH — usar `TU_IP/32` |
 | `db_name` / `db_user` / `db_password` | `mesatech_db` / `admin` / `adminpassword` | PostgreSQL dentro de la EC2 |
 | `entra_tenant_id` | `<TENANT_ID>` | Tenant de Entra ID para el *JWT Authorizer* |
@@ -292,6 +300,6 @@ Todos requieren `Authorization: Bearer <access_token>`, salvo `GET /v2/version`.
 
 **MesaTech Cloud** · Cloud Native I · Duoc UC
 
-Desarrollado por [**KrisAndre-25**](https://github.com/KrisAndre-25)
+Desarrollado por **Kristopher Astudillo**, **Bianco Martínez** y **Cesar Flores**
 
 </div>
