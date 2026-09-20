@@ -54,6 +54,7 @@ resource "null_resource" "deploy_app" {
     content = templatefile("${path.module}/templates/systemd.service.tpl", {
       description  = "MesaTech BFF Service"
       jar_filename = "bff-service.jar"
+      db_password  = var.db_password
     })
     destination = "/tmp/bff-service.service"
   }
@@ -62,6 +63,7 @@ resource "null_resource" "deploy_app" {
     content = templatefile("${path.module}/templates/systemd.service.tpl", {
       description  = "MesaTech Solicitudes Service"
       jar_filename = "solicitudes-service.jar"
+      db_password  = var.db_password
     })
     destination = "/tmp/solicitudes-service.service"
   }
@@ -70,6 +72,7 @@ resource "null_resource" "deploy_app" {
     content = templatefile("${path.module}/templates/systemd.service.tpl", {
       description  = "MesaTech Catalogo Service"
       jar_filename = "catalogo-service.jar"
+      db_password  = var.db_password
     })
     destination = "/tmp/catalogo-service.service"
   }
