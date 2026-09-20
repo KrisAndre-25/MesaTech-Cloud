@@ -19,5 +19,6 @@ export const apiRequest = {
   scopes: ["api://7442c5c2-5a49-4b98-a70f-b6aec439fd6a/access_as_user"],
 };
 
-// URL base del BFF (en produccion, esto apuntara a AWS API Gateway)
-export const bffBaseUrl = "http://localhost:8080";
+// URL base del BFF. Apunta al API Gateway desplegado en AWS (terraform/);
+// para volver a hablarle al backend local, usar "http://localhost:8080".
+export const bffBaseUrl = "https://p1at13oen7.execute-api.us-east-1.amazonaws.com";
