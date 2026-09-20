@@ -102,18 +102,18 @@ const EQUIPO = [
     src: '/kristopher.jpg',
   },
   {
-    name: 'Bianco',
+    name: 'Bianco Martinez',
     designation: 'Ingeniero en Informática · Full Stack Developer',
     quote:
       'Full Stack Developer enfocado en que cada solicitud tenga una respuesta clara y a tiempo.',
     src: '/bianco.jpg',
   },
   {
-    name: 'Cesar',
+    name: 'Cesar Flores',
     designation: 'Ingeniero en Informática · Full Stack Developer',
     quote:
       'Convencido de que la buena arquitectura empieza por entender bien el problema del cliente.',
-    src: '/cesar.webp',
+    src: '/cesar.jpg',
   },
   {
     name: 'Paulo Berríos',
