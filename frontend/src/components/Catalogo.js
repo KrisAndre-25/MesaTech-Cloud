@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 const VACIA = { nombre: '', descripcion: '', prioridad: 'MEDIA' };
 
+// El BFF responde 409 con {"error": "..."} cuando la categoria esta en uso;
+// para el resto de errores no hay cuerpo propio, se usa el mensaje de axios.
+function mensajeError(err) {
+  return err.response?.data?.error || err.message;
+}
+
 function Catalogo({ api }) {
   const [categorias, setCategorias] = useState([]);
   const [error, setError] = useState(null);
@@ -13,7 +19,7 @@ function Catalogo({ api }) {
     api
       .get('/v1/catalogo/categorias')
       .then((respuesta) => setCategorias(respuesta.data))
-      .catch((err) => setError(err.message));
+      .catch((err) => setError(mensajeError(err)));
   };
 
   useEffect(cargar, [api]);
@@ -23,9 +29,10 @@ function Catalogo({ api }) {
     try {
       await api.post('/v1/catalogo/categorias', nueva);
       setNueva(VACIA);
+      setError(null);
       cargar();
     } catch (err) {
-      setError(err.message);
+      setError(mensajeError(err));
     }
   };
 
@@ -38,18 +45,23 @@ function Catalogo({ api }) {
     try {
       await api.put(`/v1/catalogo/categorias/${id}`, borrador);
       setEditandoId(null);
+      setError(null);
       cargar();
     } catch (err) {
-      setError(err.message);
+      setError(mensajeError(err));
     }
   };
 
-  const eliminar = async (id) => {
+  const eliminar = async (id, nombre) => {
+    if (!window.confirm(`¿Eliminar la categoría "${nombre}"? Esta acción no se puede deshacer.`)) {
+      return;
+    }
     try {
       await api.delete(`/v1/catalogo/categorias/${id}`);
+      setError(null);
       cargar();
     } catch (err) {
-      setError(err.message);
+      setError(mensajeError(err));
     }
   };
 
@@ -159,7 +171,7 @@ function Catalogo({ api }) {
                     ) : (
                       <button onClick={() => iniciarEdicion(c)} style={botonIcono()}>Editar</button>
                     )}
-                    <button onClick={() => eliminar(c.id)} style={{ ...botonIcono(), color: 'var(--status-cancelada)' }}>
+                    <button onClick={() => eliminar(c.id, c.nombre)} style={{ ...botonIcono(), color: 'var(--status-cancelada)' }}>
                       Eliminar
                     </button>
                   </div>
