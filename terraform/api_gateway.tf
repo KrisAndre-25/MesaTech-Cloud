@@ -52,6 +52,20 @@ resource "aws_apigatewayv2_route" "proxy" {
   authorizer_id      = aws_apigatewayv2_authorizer.entra_jwt.id
 }
 
+# "ANY /v1/{proxy+}" tambien captura OPTIONS, y un preflight de CORS real
+# nunca lleva el header Authorization: el JWT Authorizer lo rechazaria con
+# 401 y el navegador interpretaria eso como una falla de CORS antes de
+# siquiera intentar la peticion real. Una ruta especifica para OPTIONS
+# tiene prioridad sobre la ANY para ese metodo, se reenvia sin autorizar
+# y el propio bff-service ya responde el preflight (SecurityConfig.java
+# permite OPTIONS "/**" y expone su propio CorsConfigurationSource).
+resource "aws_apigatewayv2_route" "proxy_options" {
+  api_id             = aws_apigatewayv2_api.http_api.id
+  route_key          = "OPTIONS /v1/{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.bff_proxy.id}"
+  authorization_type = "NONE"
+}
+
 resource "aws_apigatewayv2_integration" "version_proxy" {
   api_id             = aws_apigatewayv2_api.http_api.id
   integration_type   = "HTTP_PROXY"
