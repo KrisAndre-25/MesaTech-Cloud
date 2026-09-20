@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1")
@@ -71,7 +75,27 @@ public class BffController {
 
     @DeleteMapping("/catalogo/categorias/{id}")
     public ResponseEntity<Object> eliminarCategoria(@PathVariable Long id) {
+        if (categoriaEnUso(id)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", "No se puede eliminar: hay solicitudes que usan esta categoría."));
+        }
         return reenviar(HttpMethod.DELETE, catalogoUrl + "/v1/catalogo/categorias/" + id, null, null);
+    }
+
+    // Antes de borrar una categoria se verifica que ninguna solicitud la este usando,
+    // ya que solicitudes-service no aplica una FK real sobre categoriaId (son servicios
+    // desacoplados) y un borrado dejaria referencias huerfanas sin aviso.
+    @SuppressWarnings("unchecked")
+    private boolean categoriaEnUso(Long categoriaId) {
+        List<Map<String, Object>> solicitudes =
+                restTemplate.getForObject(solicitudesUrl + "/v1/solicitudes", List.class);
+        if (solicitudes == null) {
+            return false;
+        }
+        return solicitudes.stream().anyMatch(s -> {
+            Object valor = s.get("categoriaId");
+            return valor != null && categoriaId.equals(Long.valueOf(valor.toString()));
+        });
     }
 
     // Reenvía la petición al microservicio correspondiente y propaga su código de respuesta.
