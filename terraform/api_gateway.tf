@@ -28,7 +28,13 @@ resource "aws_apigatewayv2_authorizer" "entra_jwt" {
   name             = "entra-id-jwt-authorizer"
 
   jwt_configuration {
-    audience = [var.entra_api_client_id]
+    # Igual que AudienceValidator.java del bff-service: Entra ID puede emitir
+    # el claim "aud" como el GUID puro o como el Application ID URI
+    # (api://<guid>), segun la version del token. A diferencia del validador
+    # propio del bff-service, el authorizer de API Gateway hace match exacto
+    # contra esta lista, asi que hay que declarar ambas formas o rechaza
+    # tokens validos antes de que lleguen a la EC2.
+    audience = [var.entra_api_client_id, "api://${var.entra_api_client_id}"]
     issuer   = local.entra_issuer
   }
 }
