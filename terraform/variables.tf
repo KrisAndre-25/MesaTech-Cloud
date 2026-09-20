@@ -5,9 +5,9 @@ variable "aws_region" {
 }
 
 variable "instance_type" {
-  description = "Tipo de instancia EC2. t3.micro es el tamaño recomendado en AWS Academy Learner Lab."
+  description = "Tipo de instancia EC2. t3.micro (1GB RAM) se quedaba sin memoria con los 3 microservicios + Postgres + nginx del frontend corriendo a la vez (llegaba a <50MB libres y la instancia dejaba de responder); t3.small (2GB) da margen suficiente y sigue dentro de lo habitual en AWS Academy Learner Lab."
   type        = string
-  default     = "t3.micro"
+  default     = "t3.small"
 }
 
 variable "allowed_ssh_cidr" {
@@ -20,6 +20,12 @@ variable "app_port" {
   description = "Puerto público donde escucha el bff-service (único servicio expuesto a Internet; los demás microservicios son internos a la instancia)."
   type        = number
   default     = 8080
+}
+
+variable "frontend_port" {
+  description = "Puerto donde nginx sirve el build estatico del frontend (React), en un contenedor Docker en la misma EC2. API Gateway lo reenvia bajo la misma URL publica que el BFF."
+  type        = number
+  default     = 8090
 }
 
 variable "db_port" {

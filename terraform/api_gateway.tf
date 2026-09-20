@@ -83,6 +83,43 @@ resource "aws_apigatewayv2_route" "version" {
   authorization_type = "NONE"
 }
 
+# El build estatico de React (frontend/) se sirve con nginx en la misma EC2
+# (puerto var.frontend_port) y se expone bajo la misma URL publica del API
+# Gateway: frontend y BFF quedan en el mismo origen, sin problemas de CORS
+# para la version desplegada. "GET /{proxy+}" no matchea la raiz "/" (exige
+# al menos un segmento), por eso hace falta una ruta aparte para el index.
+resource "aws_apigatewayv2_integration" "frontend_proxy" {
+  api_id             = aws_apigatewayv2_api.http_api.id
+  integration_type   = "HTTP_PROXY"
+  integration_method = "GET"
+  integration_uri        = "http://${aws_instance.app.public_ip}:${var.frontend_port}/{proxy}"
+  payload_format_version = "1.0"
+  connection_type        = "INTERNET"
+}
+
+resource "aws_apigatewayv2_route" "frontend_proxy" {
+  api_id             = aws_apigatewayv2_api.http_api.id
+  route_key          = "GET /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.frontend_proxy.id}"
+  authorization_type = "NONE"
+}
+
+resource "aws_apigatewayv2_integration" "frontend_root" {
+  api_id             = aws_apigatewayv2_api.http_api.id
+  integration_type   = "HTTP_PROXY"
+  integration_method = "GET"
+  integration_uri        = "http://${aws_instance.app.public_ip}:${var.frontend_port}/index.html"
+  payload_format_version = "1.0"
+  connection_type        = "INTERNET"
+}
+
+resource "aws_apigatewayv2_route" "frontend_root" {
+  api_id             = aws_apigatewayv2_api.http_api.id
+  route_key          = "GET /"
+  target             = "integrations/${aws_apigatewayv2_integration.frontend_root.id}"
+  authorization_type = "NONE"
+}
+
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.http_api.id
   name        = "$default"

@@ -19,6 +19,14 @@ resource "aws_security_group" "app" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "nginx sirviendo el build del frontend (API Gateway reenvia aqui como HTTP_PROXY)"
+    from_port   = var.frontend_port
+    to_port     = var.frontend_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     description = "Salida libre (descarga de paquetes, imagenes Docker, etc.)"
     from_port   = 0
