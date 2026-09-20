@@ -7,6 +7,7 @@ Wants=docker.service
 Type=simple
 User=ec2-user
 WorkingDirectory=/opt/mesatech
+Environment=DB_PASSWORD=${db_password}
 ExecStart=/usr/bin/java -jar /opt/mesatech/${jar_filename}
 Restart=on-failure
 RestartSec=5

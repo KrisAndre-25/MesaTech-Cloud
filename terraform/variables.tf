@@ -47,9 +47,8 @@ variable "db_user" {
 }
 
 variable "db_password" {
-  description = "Password de la base de datos. Definir en terraform.tfvars (no versionado) o pasar por -var."
+  description = "Password de la base de datos. Sin valor por defecto a proposito: debe definirse en terraform.tfvars (ignorado por git) o pasarse por -var, para no dejar ninguna credencial en texto plano versionada en el repositorio."
   type        = string
-  default     = "adminpassword"
   sensitive   = true
 }
 

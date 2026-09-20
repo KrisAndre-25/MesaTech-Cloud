@@ -1,7 +1,10 @@
-# Copiar como terraform.tfvars (ignorado por git) y ajustar si es necesario.
-# Los valores por defecto en variables.tf ya coinciden con el entorno
+# Copiar como terraform.tfvars (ignorado por git) y ajustar segun corresponda.
+# Los demas valores por defecto en variables.tf ya coinciden con el entorno
 # local (docker-compose) y el tenant real de Microsoft Entra ID.
 
-# db_password       = "adminpassword"
+# Obligatorio: db_password no tiene valor por defecto a proposito, para que
+# ninguna credencial quede en texto plano versionada en el repositorio.
+db_password = "adminpassword"
+
 # allowed_ssh_cidr  = "TU_IP_PUBLICA/32"
 # cors_allowed_origins = ["http://localhost:3000", "https://tu-frontend-desplegado.com"]
