@@ -44,9 +44,9 @@ Frontend y backend quedan bajo la misma URL (API Gateway sirve el build de React
 
 ## 👥 Equipo
 
-- **Kristopher Astudillo**
-- **Bianco Martínez**
-- **Cesar Flores**
+- **Kristopher Astudillo** — [@KrisAndre-25](https://github.com/KrisAndre-25)
+- **Bianco Martínez** — [@Biiancoo](https://github.com/Biiancoo)
+- **Cesar Flores** — [@Kobev-dev](https://github.com/Kobev-dev)
 
 ---
 
@@ -300,6 +300,6 @@ Todos requieren `Authorization: Bearer <access_token>`, salvo `GET /v2/version`.
 
 **MesaTech Cloud** · Cloud Native I · Duoc UC
 
-Desarrollado por **Kristopher Astudillo**, **Bianco Martínez** y **Cesar Flores**
+Desarrollado por [**Kristopher Astudillo**](https://github.com/KrisAndre-25), [**Bianco Martínez**](https://github.com/Biiancoo) y [**Cesar Flores**](https://github.com/Kobev-dev)
 
 </div>
